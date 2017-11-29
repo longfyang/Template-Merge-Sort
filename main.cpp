@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cassert>
+#include <cstring>
 
 using namespace std;
 
@@ -116,6 +117,12 @@ int main(int argc, char * args[]){
 	assert(sorted<double>(f, 1000));
 
 	cout << "All douible tests passed" << endl;
+
+	string l[] = {"bob", "tim", "andy", "nate", "lee", "joe"};
+	mergesort<string>(l, 6);
+	assert(sorted<string>(l, 6));
+
+	cout << "All string tests passed" << endl;
 
 	return 0;
 }
