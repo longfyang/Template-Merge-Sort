@@ -9,7 +9,7 @@ using namespace std;
 // e = end of range to sort
 
 template <class T>
-void merge(T a[], int x[], int s, int midpoint, int e){
+void merge(T a[], T x[], int s, int midpoint, int e){
 	int i = s;
 	int m = midpoint;
 	int j = m + 1;
@@ -50,13 +50,13 @@ void merge(T a[], int x[], int s, int midpoint, int e){
 
 
 template <class T>
-void msort(T a[], int x[], int s, int e){
+void msort(T a[], T x[], int s, int e){
 	int midpoint;
 	if (e - s < 1) return;
 	   midpoint = (s + e)/2;
-	   msort<T>(a, x, s, midpoint);
-	   msort<T>(a, x, midpoint + 1, e);
-	   merge<T>(a, x, s, midpoint, e);
+	   msort(a, x, s, midpoint);
+	   msort(a, x, midpoint + 1, e);
+	   merge(a, x, s, midpoint, e);
 
 	   
 	   
@@ -64,23 +64,20 @@ void msort(T a[], int x[], int s, int e){
 
 template <class T>
 void mergesort(T a[], int len){
-	int *x = new int[len];
+	T *x = new T[len];
 	int s = 0;
-	msort<T>(a, x, s, len - 1);
+	msort(a, x, s, len - 1);
 	delete [] x;
 }
 
 template <class T>
 bool sorted (T a[], int len){
-	for (int i = 0; i < len; i++){
-	   if (a[i] < a[i + 1]){
-	      i++;
-	   }
-	   return true;
-	   
+	for (int i = 0; i < len - 1; i++) {
+		if (a[i] > a[i +1]) {
+			return false;
+		}
 	}
-
-	return false;
+	return true;
 }
 
 
@@ -103,9 +100,26 @@ int main(int argc, char * args[]){
 	mergesort<int>(d, 1001);
 	assert(sorted<int>(d, 1001));
 
-	cout << "All tests passed." << endl;
+	cout << "All int tests passed." << endl;
+
+	double e[] = {5.876};
+	mergesort<double>(e,1);
+	assert(sorted<double>(e,1));
+
+	double g[] = {2.343, 5.345, 6.33, 7.764, 1.345, 4.345};
+	mergesort<double>(g, 6);
+	assert(sorted<double>(g, 6));
+
+	double f[1000];
+	for (int i = 0; i < 1000; i++) f[i] = -50.234 + rand() % 100;
+	mergesort<double>(f, 1000);
+	assert(sorted<double>(f, 1000));
+
+	cout << "All douible tests passed" << endl;
 
 	return 0;
 }
+
+
 
 
